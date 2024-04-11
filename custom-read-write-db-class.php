@@ -20,10 +20,16 @@ class Custom_Read_Write_DB extends wpdb {
 
    // クエリの実行
    function query($query) {
+      // デバッグログにクエリ内容を記録
+      error_log('Custom_Read_Write_DB: Query: ' . $query);
       // Determine if query is a read operation
       if ($this->is_read_query($query)) {
+         // デバッグログに読み取りクエリを記録
+         error_log('Custom_Read_Write_DB: Sending query to read database');
          return $this->read_connection->query($query);
       } else {
+         // デバッグログに書き込みクエリを記録
+         error_log('Custom_Read_Write_DB: Sending query to write database');
          // For write operations, use the master database
          return $this->write_connection->query($query);
       }
